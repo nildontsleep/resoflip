@@ -1,0 +1,9 @@
+[native]
+width = 1920
+height = 1080
+refreshrate = 100
+
+[stretched]
+width = 1680
+height = 1050
+refreshrate = 100
