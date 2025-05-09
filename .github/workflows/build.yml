@@ -1,0 +1,39 @@
+name: Build ResoFlip Executable
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller pywin32 toml keyboard plyer pillow
+
+      - name: Download icon
+        run: |
+          curl -L -o resoflip.ico https://raw.githubusercontent.com/nildontsleep/resoflip/refs/heads/main/resoflip.ico
+
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --noconfirm --onefile --icon=resoflip.ico resoflip.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: resoflip-exe
+          path: dist/resoflip.exe
