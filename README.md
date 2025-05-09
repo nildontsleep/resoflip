@@ -1,9 +1,8 @@
-![resoflip_branded](https://github.com/user-attachments/assets/29ccdbfa-6bb1-4434-a12b-eed960334b22)
+[resoflip_branded](https://github.com/user-attachments/assets/29ccdbfa-6bb1-4434-a12b-eed960334b22)
 
 # 🖥️ ResoFlip
 
-
-**ResoFlip** is a simple Windows utility that toggles between two predefined screen resolutions or allows you to set a custom one. It's especially useful for gamers or creators who switch between native and stretched displays.
+**ResoFlip** is a smart Windows resolution switcher that lets you toggle between two display modes: `native` and `stretched`. It also supports hotkeys, GUI confirmations, and system notifications — ideal for gamers, streamers, and productivity users.
 
 Created by [nil](https://github.com/nildontsleep)  
 🔗 https://github.com/nildontsleep/resoflip
@@ -13,11 +12,14 @@ Created by [nil](https://github.com/nildontsleep)
 ## ✨ Features
 
 - 🔁 Toggle between `[native]` and `[stretched]` resolutions
-- ⚙️ Resolutions are configurable via `resoflip.toml`
+- 🖱️ GUI confirmation before switching (optional)
+- 🔔 Desktop notifications with app icon
+- 🎯 Global hotkey support (e.g. `Ctrl+Alt+R`)
+- ⚙️ Configurable via `resoflip.toml`
 - 📏 Manual input option for custom resolution
-- 🪄 Auto-creates config file on first run
-- 🧠 Remembers your resolution preferences
-- ✅ Built for Windows (via `pywin32`)
+- 🧠 Auto-creates config file on first run
+- 🪵 Logging to `resoflip.log`
+- ✅ Built for Windows using `pywin32`
 
 ---
 
@@ -32,8 +34,10 @@ cd resoflip
 ### 2. Install dependencies
 
 ```bash
-pip install pywin32 toml
+pip install pywin32 toml keyboard plyer pillow
 ```
+
+> ✅ If you're missing `tkinter`, install it via your Python distribution or OS package manager.
 
 ### 3. Run
 
@@ -43,9 +47,9 @@ python resoflip.py
 
 ---
 
-## 🛠️ Config: `resoflip.toml`
+## 🛠️ Configuration: `resoflip.toml`
 
-On first run, a file called `resoflip.toml` will be created in the same directory:
+On first run, a configuration file is created:
 
 ```toml
 [native]
@@ -57,36 +61,53 @@ refreshrate = 100
 width = 1680
 height = 1050
 refreshrate = 100
+
+logging = true
+confirm_before_switch = true
+enable_hotkeys = true
+hotkey = "ctrl+alt+r"
 ```
 
-Edit these values to match your preferred resolutions.
+### Options:
+
+* `confirm_before_switch`: Show a GUI confirmation before changing resolution
+* `enable_hotkeys`: Enable resolution toggle via keyboard
+* `hotkey`: Set your preferred key combo (e.g. `"ctrl+shift+f"`)
 
 ---
 
-## 💡 Behavior
+## 🧠 Behavior
 
-* If you're using the `[native]` resolution, it switches to `[stretched]`, and vice versa.
-* If your current resolution doesn't match either, it prompts you with 4 options:
+* If your current resolution matches `[native]`, ResoFlip switches to `[stretched]`, and vice versa.
+* If you're using a different resolution, you'll be prompted with:
 
   1. Switch to `[native]`
   2. Switch to `[stretched]`
   3. Enter a custom resolution
-  4. Exit without changing
+  4. Exit without changes
 
 ---
 
-## 📦 Build to .exe (optional)
+## 🔔 Notifications
 
-To create a standalone `.exe`:
+ResoFlip shows a Windows notification when switching resolutions and uses a custom icon hosted on GitHub. The icon is automatically downloaded and cached as `resoflip.ico`.
+
+---
+
+## ⌨️ Hotkey Support
+
+ResoFlip listens for a **global hotkey** to instantly toggle resolutions. The default is `Ctrl + Alt + R`.
+
+> Press **ESC** to quit hotkey mode.
+
+---
+
+## 🧪 Optional: Build to `.exe`
+
+To create a standalone `.exe` for easy use:
 
 ```bash
 pip install pyinstaller
-pyinstaller --onefile resoflip.py
-```
-
-Place your custom icon with the name `resoflip.ico` if desired:
-
-```bash
 pyinstaller --onefile --icon=resoflip.ico resoflip.py
 ```
 
@@ -95,7 +116,7 @@ pyinstaller --onefile --icon=resoflip.ico resoflip.py
 ## 🧠 Credits
 
 Made with 💻 and 🧠 by [nil](https://github.com/nildontsleep)
-Logo included in repo (AI)
+Logo included in repo (AI-generated)
 
 ---
 
